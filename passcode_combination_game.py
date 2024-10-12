@@ -131,9 +131,9 @@ try:
             mode += 1
             if mode > amount_of_modes:
                 mode = 1
+            sleep(time_between_inputs)
             GPIO.output(LED_CORRECT, GPIO.LOW)
             GPIO.output(LED_WRONG, GPIO.LOW)
-            sleep(time_between_inputs)
 
         if is_solved:
             success_protocol()
