@@ -46,4 +46,11 @@ while True:
     GPIO.output(LED_CORRECT, GPIO.LOW)
     GPIO.output(LED_WRONG, GPIO.LOW)
 
-    
+    if GPIO.input(BUTTON1):
+        GPIO.output(LED1, GPIO.HIGH)
+    if GPIO.input(BUTTON2):
+        GPIO.output(LED2, GPIO.HIGH)
+    if GPIO.input(BUTTON3):
+        GPIO.output(LED3, GPIO.HIGH)
+    if GPIO.input(BUTTON4):
+        GPIO.output(LED4, GPIO.HIGH)
