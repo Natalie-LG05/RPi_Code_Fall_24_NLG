@@ -39,7 +39,7 @@ GPIO.setup(BUTTON_ENTER, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(BUTTON_CHANGE_MODE, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # Logic variable initialization
-time_between_inputs = 0.1
+time_between_inputs = 0.25
 
 code = []
 inputs = []
