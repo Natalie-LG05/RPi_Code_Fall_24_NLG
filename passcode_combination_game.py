@@ -1,6 +1,7 @@
 # Natalie Gates ; passcode/combination game
 
 import RPi.GPIO as GPIO
+from time import sleep
 
 # Define LED and button locations
 LED1 = 13
@@ -38,6 +39,8 @@ GPIO.setup(BUTTON_ENTER, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(BUTTON_CHANGE_MODE, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # Logic variable initialization
+time_between_inputs = 0.1
+
 code = []
 inputs = []
 mode = 0
@@ -56,15 +59,19 @@ try:
         if GPIO.input(BUTTON1):
             GPIO.output(LED1, GPIO.HIGH)
             inputs.append(1)
+            sleep(time_between_inputs)
         if GPIO.input(BUTTON2):
             GPIO.output(LED2, GPIO.HIGH)
             inputs.append(2)
+            sleep(time_between_inputs)
         if GPIO.input(BUTTON3):
             GPIO.output(LED3, GPIO.HIGH)
             inputs.append(3)
+            sleep(time_between_inputs)
         if GPIO.input(BUTTON4):
             GPIO.output(LED4, GPIO.HIGH)
             inputs.append(4)
+            sleep(time_between_inputs)
 except KeyboardInterrupt:
     # debugging
     print(inputs)
