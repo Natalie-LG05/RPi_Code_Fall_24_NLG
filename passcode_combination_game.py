@@ -43,45 +43,108 @@ time_between_inputs = 0.25
 
 code = [1, 4, 3, 2]
 inputs = []
-mode = 0
+is_solved = False
+
+mode = 1
+amount_of_modes = 3
+
+def success_protocol():
+    sleep(time_between_inputs)
+
+    # execute protocol based on the current mode
+    match mode:
+        case 1:
+            # Mode 1: Turn on all LEDs
+            GPIO.output(LED1, GPIO.HIGH)
+            GPIO.output(LED2, GPIO.HIGH)
+            GPIO.output(LED3, GPIO.HIGH)
+            GPIO.output(LED4, GPIO.HIGH)
+        case 2:
+            flash_time = 1
+            # Mode 2: Flash all LEDs slowly
+            GPIO.output(LED1, GPIO.HIGH)
+            GPIO.output(LED2, GPIO.HIGH)
+            GPIO.output(LED3, GPIO.HIGH)
+            GPIO.output(LED4, GPIO.HIGH)
+            sleep(flash_time)
+
+            GPIO.output(LED1, GPIO.LOW)
+            GPIO.output(LED2, GPIO.LOW)
+            GPIO.output(LED3, GPIO.LOW)
+            GPIO.output(LED4, GPIO.LOW)
+            sleep(flash_time)
+        case 3:
+            flash_time = 0.05
+            # Mode 2: Flash all LEDs fast
+            GPIO.output(LED1, GPIO.HIGH)
+            GPIO.output(LED2, GPIO.HIGH)
+            GPIO.output(LED3, GPIO.HIGH)
+            GPIO.output(LED4, GPIO.HIGH)
+            sleep(flash_time)
+
+            GPIO.output(LED1, GPIO.LOW)
+            GPIO.output(LED2, GPIO.LOW)
+            GPIO.output(LED3, GPIO.LOW)
+            GPIO.output(LED4, GPIO.LOW)
+            sleep(flash_time)
+        case _:
+            #error probably
+            pass
 
 try:
     while True:
-        # Reset all LEDs
-        GPIO.output(LED1, GPIO.LOW)
-        GPIO.output(LED2, GPIO.LOW)
-        GPIO.output(LED3, GPIO.LOW)
-        GPIO.output(LED4, GPIO.LOW)
-        GPIO.output(LED_CORRECT, GPIO.LOW)
-        GPIO.output(LED_WRONG, GPIO.LOW)
+        if not is_solved:
+            # Reset all LEDs
+            GPIO.output(LED1, GPIO.LOW)
+            GPIO.output(LED2, GPIO.LOW)
+            GPIO.output(LED3, GPIO.LOW)
+            GPIO.output(LED4, GPIO.LOW)
+            GPIO.output(LED_CORRECT, GPIO.LOW)
+            GPIO.output(LED_WRONG, GPIO.LOW)
 
-        # When a button is pressed, light up its corresponding LED and save the input
-        if GPIO.input(BUTTON1):
-            GPIO.output(LED1, GPIO.HIGH)
-            inputs.append(1)
-            sleep(time_between_inputs)
-        if GPIO.input(BUTTON2):
-            GPIO.output(LED2, GPIO.HIGH)
-            inputs.append(2)
-            sleep(time_between_inputs)
-        if GPIO.input(BUTTON3):
-            GPIO.output(LED3, GPIO.HIGH)
-            inputs.append(3)
-            sleep(time_between_inputs)
-        if GPIO.input(BUTTON4):
-            GPIO.output(LED4, GPIO.HIGH)
-            inputs.append(4)
-            sleep(time_between_inputs)
+            # When a button is pressed, light up its corresponding LED and save the input
+            if GPIO.input(BUTTON1):
+                GPIO.output(LED1, GPIO.HIGH)
+                inputs.append(1)
+                sleep(time_between_inputs)
+            if GPIO.input(BUTTON2):
+                GPIO.output(LED2, GPIO.HIGH)
+                inputs.append(2)
+                sleep(time_between_inputs)
+            if GPIO.input(BUTTON3):
+                GPIO.output(LED3, GPIO.HIGH)
+                inputs.append(3)
+                sleep(time_between_inputs)
+            if GPIO.input(BUTTON4):
+                GPIO.output(LED4, GPIO.HIGH)
+                inputs.append(4)
+                sleep(time_between_inputs)
+        elif is_solved:
+            success_protocol()
 
         if GPIO.input(BUTTON_ENTER):
-            print(inputs)
-            
-            if inputs == code:
-                GPIO.output(LED_CORRECT, GPIO.HIGH)
+            if not is_solved:
+                # Debugging
+                print(inputs)
+
+                # When the enter button is pressed, check if the code is correct
+                if inputs == code:
+                    # code is right, flash green and then activate success protocol
+                    GPIO.output(LED_CORRECT, GPIO.HIGH)
+                    is_solved = True # Enter the solved state
+                else:
+                    # code is wrong, flash red
+                    GPIO.output(LED_WRONG, GPIO.HIGH)
+                inputs = []
+                sleep(time_between_inputs)
             else:
-                GPIO.output(LED_WRONG, GPIO.HIGH)
-            inputs = []
-            sleep(time_between_inputs)
+                is_solved = False # Exit the solved state
+                sleep(time_between_inputs)
+
+        if GPIO.input(BUTTON_CHANGE_MODE):
+            mode += 1
+            if mode > amount_of_modes:
+                mode = 1
 except KeyboardInterrupt:
     # debugging
     print(inputs)
