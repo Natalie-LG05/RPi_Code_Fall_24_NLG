@@ -63,8 +63,6 @@ def flash_LEDs(time):
     sleep(time)
 
 def success_protocol():
-    sleep(time_between_inputs)
-
     # execute protocol based on the current mode
     if mode == 1:
         # Mode 1: Turn on all LEDs
