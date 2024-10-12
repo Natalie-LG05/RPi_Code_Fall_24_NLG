@@ -37,20 +37,43 @@ GPIO.setup(LED_WRONG, GPIO.OUT)
 GPIO.setup(BUTTON_ENTER, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(BUTTON_CHANGE_MODE, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-while True:
-    # Reset all LEDs
+# Logic variable initialization
+code = []
+inputs = []
+mode = 0
+
+try:
+    while True:
+        # Reset all LEDs
+        GPIO.output(LED1, GPIO.LOW)
+        GPIO.output(LED2, GPIO.LOW)
+        GPIO.output(LED3, GPIO.LOW)
+        GPIO.output(LED4, GPIO.LOW)
+        GPIO.output(LED_CORRECT, GPIO.LOW)
+        GPIO.output(LED_WRONG, GPIO.LOW)
+
+        # When a button is pressed, light up its corresponding LED and save the input
+        if GPIO.input(BUTTON1):
+            GPIO.output(LED1, GPIO.HIGH)
+            inputs.append(1)
+        if GPIO.input(BUTTON2):
+            GPIO.output(LED2, GPIO.HIGH)
+            inputs.append(2)
+        if GPIO.input(BUTTON3):
+            GPIO.output(LED3, GPIO.HIGH)
+            inputs.append(3)
+        if GPIO.input(BUTTON4):
+            GPIO.output(LED4, GPIO.HIGH)
+            inputs.append(4)
+except KeyboardInterrupt:
+    # debugging
+    print(inputs)
+
+    # reset everything
     GPIO.output(LED1, GPIO.LOW)
     GPIO.output(LED2, GPIO.LOW)
     GPIO.output(LED3, GPIO.LOW)
     GPIO.output(LED4, GPIO.LOW)
     GPIO.output(LED_CORRECT, GPIO.LOW)
     GPIO.output(LED_WRONG, GPIO.LOW)
-
-    if GPIO.input(BUTTON1):
-        GPIO.output(LED1, GPIO.HIGH)
-    if GPIO.input(BUTTON2):
-        GPIO.output(LED2, GPIO.HIGH)
-    if GPIO.input(BUTTON3):
-        GPIO.output(LED3, GPIO.HIGH)
-    if GPIO.input(BUTTON4):
-        GPIO.output(LED4, GPIO.HIGH)
+    GPIO.cleanup()
