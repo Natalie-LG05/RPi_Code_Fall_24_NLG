@@ -41,7 +41,7 @@ GPIO.setup(BUTTON_CHANGE_MODE, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 # Logic variable initialization
 time_between_inputs = 0.25
 
-code = []
+code = [1, 4, 3, 2]
 inputs = []
 mode = 0
 
@@ -72,6 +72,13 @@ try:
             GPIO.output(LED4, GPIO.HIGH)
             inputs.append(4)
             sleep(time_between_inputs)
+
+        if GPIO.input(BUTTON_ENTER):
+            if input == code:
+                GPIO.output(LED_CORRECT, GPIO.HIGH)
+            else:
+                GPIO.output(LED_WRONG, GPIO.HIGH)
+            inputs = []
 except KeyboardInterrupt:
     # debugging
     print(inputs)
