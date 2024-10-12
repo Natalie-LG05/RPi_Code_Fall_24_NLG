@@ -85,7 +85,7 @@ def success_protocol():
         # Mode 2: Flash all LEDs fast
         flash_LEDs(0.05)
     elif mode == 4:
-        flash_LED_random(LEDs1[random.randint(0,3)], 0.01, 1)
+        flash_LED_random(LEDs1[random.randint(0,3)], 0.01, 1.5)
 
 try:
     while True:
