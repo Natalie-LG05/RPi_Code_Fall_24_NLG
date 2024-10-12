@@ -132,7 +132,7 @@ try:
             if mode > amount_of_modes:
                 mode = 1
             sleep(time_between_inputs)
-            GPIO.output(LED_CORRECT, GPIO.LOW)
+            # GPIO.output(LED_CORRECT, GPIO.LOW)
             GPIO.output(LED_WRONG, GPIO.LOW)
 
         if is_solved:
@@ -141,7 +141,7 @@ except KeyboardInterrupt:
     # debugging
     print(inputs)
 
-    # reset everything
+    # (attempt to) reset everything
     GPIO.output(LED1, GPIO.LOW)
     GPIO.output(LED2, GPIO.LOW)
     GPIO.output(LED3, GPIO.LOW)
