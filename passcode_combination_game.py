@@ -9,6 +9,7 @@ LED1 = 13
 LED2 = 16
 LED3 = 6
 LED4 = 12
+LEDs1 = [LED1, LED2, LED3, LED4]
 
 BUTTON1 = 20
 BUTTON2 = 19
@@ -49,6 +50,12 @@ is_solved = False
 mode = 1
 amount_of_modes = 4
 
+def flash_LED_random(LED, min_time, max_time):
+    GPIO.output(LED, GPIO.HIGH)
+    sleep(random.uniform(min_time, max_time))
+    GPIO.output(LED, GPIO.LOW)
+    sleep(random.uniform(min_time, max_time))
+
 def flash_LEDs(time):
     # Mode 2: Flash all LEDs at a given speed
     GPIO.output(LED1, GPIO.HIGH)
@@ -78,7 +85,8 @@ def success_protocol():
         # Mode 2: Flash all LEDs fast
         flash_LEDs(0.05)
     elif mode == 4:
-        flash_LEDs(random.uniform(0.01, 7.5))
+        for LED in LEDs1:
+            flash_LED_random(LED, 0.01, 7.5)
 
 try:
     while True:
