@@ -13,7 +13,7 @@ BUTTON3 = 22
 BUTTON4 = 21
 
 GPIO.cleanup()
-GPIO.setmode(GPIO.BCM) # sets config for gpio interterface
+GPIO.setmode(GPIO.BCM) # sets config for gpio interface
 
 GPIO.setup(LED_R, GPIO.OUT)
 GPIO.setup(LED_Y, GPIO.OUT)
