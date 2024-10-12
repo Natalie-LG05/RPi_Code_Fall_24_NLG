@@ -48,48 +48,36 @@ is_solved = False
 mode = 1
 amount_of_modes = 3
 
+def flash_LEDs(time):
+    # Mode 2: Flash all LEDs at a given speed
+    GPIO.output(LED1, GPIO.HIGH)
+    GPIO.output(LED2, GPIO.HIGH)
+    GPIO.output(LED3, GPIO.HIGH)
+    GPIO.output(LED4, GPIO.HIGH)
+    sleep(time)
+
+    GPIO.output(LED1, GPIO.LOW)
+    GPIO.output(LED2, GPIO.LOW)
+    GPIO.output(LED3, GPIO.LOW)
+    GPIO.output(LED4, GPIO.LOW)
+    sleep(time)
+
 def success_protocol():
     sleep(time_between_inputs)
 
     # execute protocol based on the current mode
-    match mode:
-        case 1:
-            # Mode 1: Turn on all LEDs
-            GPIO.output(LED1, GPIO.HIGH)
-            GPIO.output(LED2, GPIO.HIGH)
-            GPIO.output(LED3, GPIO.HIGH)
-            GPIO.output(LED4, GPIO.HIGH)
-        case 2:
-            flash_time = 1
-            # Mode 2: Flash all LEDs slowly
-            GPIO.output(LED1, GPIO.HIGH)
-            GPIO.output(LED2, GPIO.HIGH)
-            GPIO.output(LED3, GPIO.HIGH)
-            GPIO.output(LED4, GPIO.HIGH)
-            sleep(flash_time)
-
-            GPIO.output(LED1, GPIO.LOW)
-            GPIO.output(LED2, GPIO.LOW)
-            GPIO.output(LED3, GPIO.LOW)
-            GPIO.output(LED4, GPIO.LOW)
-            sleep(flash_time)
-        case 3:
-            flash_time = 0.05
-            # Mode 2: Flash all LEDs fast
-            GPIO.output(LED1, GPIO.HIGH)
-            GPIO.output(LED2, GPIO.HIGH)
-            GPIO.output(LED3, GPIO.HIGH)
-            GPIO.output(LED4, GPIO.HIGH)
-            sleep(flash_time)
-
-            GPIO.output(LED1, GPIO.LOW)
-            GPIO.output(LED2, GPIO.LOW)
-            GPIO.output(LED3, GPIO.LOW)
-            GPIO.output(LED4, GPIO.LOW)
-            sleep(flash_time)
-        case _:
-            #error probably
-            pass
+    if mode == 1:
+        # Mode 1: Turn on all LEDs
+        GPIO.output(LED1, GPIO.HIGH)
+        GPIO.output(LED2, GPIO.HIGH)
+        GPIO.output(LED3, GPIO.HIGH)
+        GPIO.output(LED4, GPIO.HIGH)
+    elif mode == 2:
+        # Mode 2: Flash all LEDs slowly
+        flash_LEDs(1)
+    elif mode == 3:
+        # Mode 2: Flash all LEDs fast
+        flash_LEDs(0.05)
 
 try:
     while True:
