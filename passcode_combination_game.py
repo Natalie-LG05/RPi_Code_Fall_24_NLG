@@ -130,9 +130,12 @@ try:
                 sleep(time_between_inputs)
 
         if GPIO.input(BUTTON_CHANGE_MODE):
+            GPIO.output(LED_CORRECT, GPIO.HIGH)
+            GPIO.output(LED_WRONG, GPIO.HIGH)
             mode += 1
             if mode > amount_of_modes:
                 mode = 1
+            sleep((time_between_inputs))
 except KeyboardInterrupt:
     # debugging
     print(inputs)
