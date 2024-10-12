@@ -20,7 +20,7 @@ BUTTON_ENTER = 18
 BUTTON_CHANGE_MODE = 23
 
 # Setup components
-GPIO.cleanup()
+# GPIO.cleanup()
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(LED1, GPIO.OUT)
@@ -74,11 +74,14 @@ try:
             sleep(time_between_inputs)
 
         if GPIO.input(BUTTON_ENTER):
-            if input == code:
+            print(inputs)
+            
+            if inputs == code:
                 GPIO.output(LED_CORRECT, GPIO.HIGH)
             else:
                 GPIO.output(LED_WRONG, GPIO.HIGH)
             inputs = []
+            sleep(time_between_inputs)
 except KeyboardInterrupt:
     # debugging
     print(inputs)
