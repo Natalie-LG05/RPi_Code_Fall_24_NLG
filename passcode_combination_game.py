@@ -54,7 +54,7 @@ def flash_LED_random(LED, min_time, max_time):
     GPIO.output(LED, GPIO.HIGH)
     sleep(random.uniform(min_time, max_time))
     GPIO.output(LED, GPIO.LOW)
-    sleep(random.uniform(min_time, max_time))
+    # sleep(random.uniform(min_time, max_time))
 
 def flash_LEDs(time):
     # Mode 2: Flash all LEDs at a given speed
@@ -85,8 +85,7 @@ def success_protocol():
         # Mode 2: Flash all LEDs fast
         flash_LEDs(0.05)
     elif mode == 4:
-        for LED in LEDs1:
-            flash_LED_random(LED, 0.01, 7.5)
+        flash_LED_random(LEDs1[random.randint(0,4)], 0.01, 7.5)
 
 try:
     while True:
