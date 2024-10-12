@@ -1,5 +1,6 @@
 # Natalie Gates ; passcode/combination game
 
+import random
 import RPi.GPIO as GPIO
 from time import sleep
 
@@ -46,7 +47,7 @@ inputs = []
 is_solved = False
 
 mode = 1
-amount_of_modes = 3
+amount_of_modes = 4
 
 def flash_LEDs(time):
     # Mode 2: Flash all LEDs at a given speed
@@ -76,6 +77,8 @@ def success_protocol():
     elif mode == 3:
         # Mode 2: Flash all LEDs fast
         flash_LEDs(0.05)
+    elif mode == 4:
+        flash_LEDs(random.uniform(0.01, 7.5))
 
 try:
     while True:
