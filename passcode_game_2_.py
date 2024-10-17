@@ -53,12 +53,13 @@ buttons = {
 }
 
 # Exit handler
-@atexit.register
 def on_exit():
     print("Closing!")
     GPIO.cleanup()
 
 # Main Code
+atexit.register(on_exit)
 print("Starting!")
+
 while True:
     pass
