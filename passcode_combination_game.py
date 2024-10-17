@@ -5,21 +5,21 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 # Define LED and button locations
-LED1 = 13
-LED2 = 16
-LED3 = 6
-LED4 = 12
+LED1 = 4
+LED2 = 6
+LED3 = 12
+LED4 = 13
 LEDs1 = [LED1, LED2, LED3, LED4]
 
-BUTTON1 = 20
-BUTTON2 = 19
-BUTTON3 = 22
-BUTTON4 = 21
+BUTTON1 = 23
+BUTTON2 = 22
+BUTTON3 = 21
+BUTTON4 = 20
 
-LED_CORRECT = 5
-LED_WRONG = 4
-BUTTON_ENTER = 18
-BUTTON_CHANGE_MODE = 23
+LED_CORRECT = 16
+LED_WRONG = 17
+BUTTON_ENTER = 19
+BUTTON_CHANGE_MODE = 18
 
 # Setup components
 # GPIO.cleanup()
