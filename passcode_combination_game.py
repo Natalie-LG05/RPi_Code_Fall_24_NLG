@@ -6,9 +6,9 @@ from time import sleep
 
 # Define LED and button locations
 LED1 = 4
-LED2 = 6
-LED3 = 12
-LED4 = 13
+LED2 = 5
+LED3 = 6
+LED4 = 12
 LEDs1 = [LED1, LED2, LED3, LED4]
 
 BUTTON1 = 23
@@ -16,8 +16,8 @@ BUTTON2 = 22
 BUTTON3 = 21
 BUTTON4 = 20
 
-LED_CORRECT = 16
-LED_WRONG = 17
+LED_CORRECT = 13
+LED_WRONG = 16
 BUTTON_ENTER = 19
 BUTTON_CHANGE_MODE = 18
 
