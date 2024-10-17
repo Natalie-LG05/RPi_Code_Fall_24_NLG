@@ -46,6 +46,9 @@ def on_exit():
 # Main Code
 print('Starting!')
 
+# Input tracking
+inputs = []
+
 while True:
     # To turn off the program cleanly (without having to force quit it or keyboard interrupt etc.)
     i = 0
@@ -57,5 +60,8 @@ while True:
             exit()
 
     # Run all the buttons on_press() methods
-    for button in buttons.values():
-        button.on_press()
+    for button_key in buttons.keys():
+        buttons[button_key].on_press()
+        if buttons[button_key].register_input():
+            inputs.append(button_key)
+    print(inputs)
