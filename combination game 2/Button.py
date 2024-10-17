@@ -41,3 +41,4 @@ class Button:
         else:
             # If button is up, then reset the state
             self.was_pressed = False
+            return False
