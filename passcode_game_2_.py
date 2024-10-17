@@ -52,14 +52,13 @@ buttons = {
     "BUTTON_6": button(18), # red
 }
 
-
-# Main Code
-print("Starting!")
-while True:
-    pass
-
 # Exit handler
 @atexit.register
 def on_exit():
     print("Closing!")
     GPIO.cleanup()
+
+# Main Code
+print("Starting!")
+while True:
+    pass
