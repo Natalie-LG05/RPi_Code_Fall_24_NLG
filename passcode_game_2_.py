@@ -87,4 +87,6 @@ while True:
             # Triggers if at least 4 buttons are pressed at once
             exit()
 
-    pass
+    # Run all the buttons on_press() methods
+    for button in buttons.values():
+        button.on_press()
