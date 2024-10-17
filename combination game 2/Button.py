@@ -36,6 +36,8 @@ class Button:
             if not self.was_pressed:
                 self.was_pressed = True
                 return True
+            else:
+                return False
         else:
             # If button is up, then reset the state
             self.was_pressed = False
