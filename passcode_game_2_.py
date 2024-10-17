@@ -5,7 +5,7 @@ from time import sleep
 import atexit
 
 # classes for components
-class led:
+class Led:
     def __init__(self, pin):
         self.pin = pin
         GPIO.setup(self.pin, GPIO.OUT)
@@ -17,39 +17,53 @@ class led:
     def off(self):
         GPIO.output(self.pin, GPIO.LOW)
 
-class button:
-    def __init__(self, pin):
+class Button:
+    def __init__(self, pin, led_md1=None):
+        """
+
+        :param pin:
+        :param led_md1: Assign an LED to control during mode 1
+        """
         self.pin = pin
+        self.led_md1 = led_md1
         GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     def is_pressed(self):
         return GPIO.input(self.pin)
+
+    def on_press(self):
+        if self.is_pressed():
+            if self.led_md1:
+                self.led_md1.on()
+        else:
+            if self.led_md1:
+                self.led_md1.off()
 
 # Initialize components
 GPIO.setmode(GPIO.BCM)
 
 leds = {
     # First set of LEDs
-    'LED_G1': led(4),  # green
-    'LED_B1': led(5),  # blue
-    'LED_Y1': led(6),  # yellow
-    'LED_R1': led(12), # red
+    'LED_G1': Led(4),  # green
+    'LED_B1': Led(5),  # blue
+    'LED_Y1': Led(6),  # yellow
+    'LED_R1': Led(12), # red
 
-    'LED_G3': led(13), # green
-    'LED_R2': led(16), # red
-    'LED_Y2': led(27), # yellow
-    'LED_B2': led(26), # blue
+    'LED_G3': Led(13), # green
+    'LED_R2': Led(16), # red
+    'LED_Y2': Led(27), # yellow
+    'LED_B2': Led(26), # blue
 }
 
 buttons = {
 # First set of LEDs
-    'BUTTON_1': button(23),  # green
-    'BUTTON_2': button(22),  # blue
-    'BUTTON_3': button(21),  # yellow
-    'BUTTON_4': button(20), # red
+    'BUTTON_1': Button(23, led_md1=leds["LED_G1"]),  # green
+    'BUTTON_2': Button(22, led_md1=leds["LED_B1"]),  # blue
+    'BUTTON_3': Button(21, led_md1=leds["LED_Y1"]),  # yellow
+    'BUTTON_4': Button(20, led_md1=leds["LED_R1"]), # red
 
-    'BUTTON_5': button(19), # green
-    'BUTTON_6': button(18), # red
+    'BUTTON_5': Button(19), # green
+    'BUTTON_6': Button(18), # red
 }
 
 # Exit handler
@@ -65,12 +79,12 @@ print('Starting!')
 
 while True:
     # To turn off the program cleanly (without having to force quit it or keyboard interrupt etc.)
-    # Triggers if at least 4 buttons are pressed at once
     i = 0
-    for button_ in buttons.values():
-        if button_.is_pressed():
+    for button in buttons.values():
+        if button.is_pressed():
             i += 1
         if i >= 4:
+            # Triggers if at least 4 buttons are pressed at once
             exit()
 
     pass
