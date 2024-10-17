@@ -26,6 +26,8 @@ class button:
         return GPIO.input(self.pin)
 
 # Initialize components
+GPIO.setmode(GPIO.BCM)
+
 leds = {
     # First set of LEDs
     "LED_G1": led(4),  # green
@@ -50,7 +52,6 @@ buttons = {
     "BUTTON_6": button(18), # red
 }
 
-GPIO.setmode(GPIO.BCM)
 
 # Main Code
 print("Starting!")
