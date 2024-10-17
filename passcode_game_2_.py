@@ -55,6 +55,8 @@ buttons = {
 
 # Main Code
 print("Starting!")
+while True:
+    pass
 
 # Exit handler
 @atexit.register
