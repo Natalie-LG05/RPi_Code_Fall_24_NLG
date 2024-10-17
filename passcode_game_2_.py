@@ -66,10 +66,11 @@ print('Starting!')
 while True:
     # To turn off the program cleanly (without having to force quit it or keyboard interrupt etc.)
     # Triggers if at least 4 buttons are pressed at once
-    i = 1
+    i = 0
     for button_ in buttons.values():
         if button_.is_pressed():
             i += 1
         if i >= 4:
             exit()
-        break
+
+    pass
