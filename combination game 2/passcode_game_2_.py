@@ -62,6 +62,9 @@ while True:
     # Run all the buttons on_press() methods
     for button_key in buttons.keys():
         buttons[button_key].on_press()
-        if buttons[button_key].register_input():
+        if buttons[button_key].register_input() and button_key is not 'BUTTON_6':
             inputs.append(button_key)
-    print(inputs)
+
+    if buttons['BUTTON_6'].is_pressed():
+        print(inputs)
+        inputs = []
