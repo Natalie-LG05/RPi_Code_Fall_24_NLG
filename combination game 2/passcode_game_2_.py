@@ -65,6 +65,7 @@ while True:
         if buttons[button_key].register_input() and button_key is not 'BUTTON_6':
             inputs.append(button_key)
 
+    print(buttons['BUTTON_6'].register_input())
     if buttons['BUTTON_6'].register_input():
         print(inputs)
         inputs = []

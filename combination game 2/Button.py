@@ -29,8 +29,7 @@ class Button:
     # Checks for, and registers input
     def register_input(self):
         """
-
-        :return: Returns true if button is pressed, and this is the first frame it has been pressed
+        :return: Returns true if button is pressed, and this is the first frame it has been pressed; otherwise false
         """
         if self.is_pressed():
             # Only register input if this is the first frame it has been pressed for
