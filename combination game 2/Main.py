@@ -87,7 +87,7 @@ while True:
                 inputs.append(button_key)
 
         # When button 6 is pressed, check if the code is right and reset the input list
-        if buttons['BUTTON_6'].register_input():
+        if buttons['BUTTON_5'].register_input():
             print(inputs)
 
             if code.check_code(inputs):
