@@ -14,7 +14,7 @@ class Queue:
         if self.previous_finished and (not self.queue_empty()):
             print(f'Flashing LED: {self.queue[0]}')
             self.queue[0].flash(self.queue_times[0][0], self.queue_times[0][1])
-            self.queue.pop()
+            self.pop()
 
     def previous_finished(self):
         """ Checks if any LEDs are currently in the middle of flashing """
