@@ -13,7 +13,7 @@ class Queue:
         # If the previous led has finished, flash the next one (if there is a next one)
         if self.previous_finished() and (not self.queue_empty()):
             # print(f'Flashing LED: {self.queue[0]}')
-            if isinstance(self.queue[0], list):
+            if hasattr(self.queue[0], '__len__'):
                 # If a list of LEDs was queued:
                 for led in self.queue[0]:
                     led.flash(self.queue_times[0][0], self.queue_times[0][1])
