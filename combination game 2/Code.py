@@ -12,7 +12,6 @@ class Code:
         self.queue = queue
 
         self.display_finished = True
-        self.flash_queue = []  # Acts as a queue/stack; furthest right element ([-1]) is considered first/on top
 
     def update(self, state):
         if state == 2:
