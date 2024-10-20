@@ -49,6 +49,7 @@ queue = Queue(leds)
 
 # Setup the code
 code = Code(leds, queue)
+print(f'The first code is: {code.code}')
 
 # Exit handler
 @atexit.register
@@ -110,19 +111,16 @@ while True:
             if code.check_code(inputs):
                 # TODO Flash green for feedback
                 # Code is correct, enter success state (state 3)
-                for i in range(3):
+                for i in range(10):
                     for led in leds.values():
-                        queue.queue_add(led, 0.05, 0.015)
-                for i in range(5):
-                    for led in leds.values():
-                        led.on()
-                    sleep(0.1)
-                    for led in leds.values():
-                        led.off()
-                    sleep(0.1)
+                        queue.queue_add(led, 0.025, 0.005)
+                for i in range(10):
+                    queue.queue_add(leds.values(), 0.075, 0.075)
                 state = 3
                 # TODO Success Protocol
             else:  # Request new code, or guess is wrong
+                leds['LED_4'].flash(1, 0.3)  # Flash red for feedback
+                leds['LED_8'].flash(1, 0.3)  # Flash red for feedback
                 leds['LED_9'].flash(1, 0.3)  # Flash red for feedback
 
                 code.generate_code() # generate new code
@@ -142,8 +140,9 @@ while True:
     # State 3: Success State
     if state == 3:
         #TODO Success Protocol
-        if queue.queue_empty():
-            for i in range(5,9):
-                leds[f'LED_{i}'].flash(1, 0.3)
-            state = 1
+        leds_list = []
+        for i in range(5,9):
+            leds_list.append(leds[f'LED_{i}'])
+        queue.queue_add(leds_list, 1, 0.3)
+        state = 1
         #TODO 6th Button Functionality
