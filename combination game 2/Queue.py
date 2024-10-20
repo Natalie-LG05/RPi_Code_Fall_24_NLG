@@ -20,8 +20,9 @@ class Queue:
         """ Checks if any LEDs are currently in the middle of flashing """
         for led in self.leds.values():
             if led.flashing:
-                print(f'{led} is flashing')
+                # print(f'{led} is flashing')
                 return False
+        print('No LED is flashing')
         return True
 
     def queue_empty(self):
