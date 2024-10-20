@@ -42,11 +42,11 @@ buttons = {
     'BUTTON_6': Button(18),  # change mode button
 }
 
-# Setup the code
-code = Code(leds)
-
 # Setup the queue (used for flashing LEDs in sequence)
 queue = Queue(leds)
+
+# Setup the code
+code = Code(leds, queue)
 
 # Exit handler
 @atexit.register
