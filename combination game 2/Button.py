@@ -1,3 +1,5 @@
+# Natalie Gates ; Button class
+
 import RPi.GPIO as GPIO
 
 class Button:
@@ -17,27 +19,25 @@ class Button:
     def is_pressed(self):
         return GPIO.input(self.pin)
 
-    # Press and Unpress behavior
-    def on_press(self):
+    # Define continuous behavior while up or down for each mode/state
+    def while_pressed(self, state):
         if self.is_pressed():
-            if self.led_md1:  # Turn md1 led on
+            if state == 1 and self.led_md1:  # Turn md1 led on
+                # May interfere with flashing LEDs
                 self.led_md1.on()
         else:
-            if self.led_md1:  # Turn md1 led off
+            if state == 1 and self.led_md1:  # Turn md1 led off
                 self.led_md1.off()
 
-    # Checks for, and registers input
+    # Checks for, and registers "press" input
     def register_input(self):
         """
         :return: Returns true if button is pressed, and this is the first frame it has been pressed; otherwise false
         """
-        if self.is_pressed():
+        if self.is_pressed() and (not self.was_pressed):
             # Only register input if this is the first frame it has been pressed for
-            if not self.was_pressed:
-                self.was_pressed = True
-                return True
-            else:
-                return False
+            self.was_pressed = True
+            return True
         else:
             # If button is up, then reset the state
             self.was_pressed = False
