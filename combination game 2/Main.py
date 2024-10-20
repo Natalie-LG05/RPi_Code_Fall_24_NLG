@@ -8,6 +8,7 @@ from Led import Led
 from Button import Button
 
 from Code import Code
+from Queue import Queue
 
 # Initialize components
 GPIO.setmode(GPIO.BCM)
@@ -43,6 +44,9 @@ buttons = {
 
 # Setup the code
 code = Code(leds)
+
+# Setup the queue (used for flashing LEDs in sequence)
+queue = Queue(leds)
 
 # Exit handler
 @atexit.register
@@ -80,6 +84,9 @@ while True:
 
     # Update the code instance (for displaying the code)
     code.update(state)
+
+    # Update the queue instance (for flashing LEDs in sequence)
+    queue.update(state)
 
     # Mode (state) 1 behavior
     # State 1 (Main state): Show, input, and guess code

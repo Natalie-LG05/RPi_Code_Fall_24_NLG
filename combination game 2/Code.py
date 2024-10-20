@@ -1,33 +1,22 @@
 # Natalie Gates ; Code class
 
 from random import randint
-from Led import Led
+# from Led import Led
 
 class Code:
-    def __init__(self, leds):
+    def __init__(self, leds, queue):
         self.code = []
         self.generate_code()  # Generate a code automatically on creation
 
         self.leds = leds  # store the led list (hopefully should stay updated since it is a list of pointers)
+        self.queue = queue
+
         self.display_finished = True
         self.flash_queue = []  # Acts as a queue/stack; furthest right element ([-1]) is considered first/on top
 
     def update(self, state):
         if state == 2:
-            # Flash LEDs when previous is finished
-            previous_finished = True
-            for led in self.leds.values():
-                if led.flashing:  # If any of the leds are flashing, then the previous led hasn't finished yet
-                    previous_finished = False
-                    break
-
-            # If the previous led has finished, flash the next one
-            if previous_finished and len(self.flash_queue):
-                self.flash_queue[-1].flash(1.3, 0.3)
-                self.flash_queue.pop()
-                previous_finished = False  # To ensure the last one has time to finish flashing
-
-            if previous_finished and (not len(self.flash_queue)):
+            if self.queue.previous_finished() and (not self.queue.queue_empty()):
                 # No items left in queue and all LEDs have finished flashing; Code display has finished
                 self.display_finished = True
 
@@ -40,7 +29,7 @@ class Code:
 
         # Queue all the leds to flash (including the 1st one so that it waits for the red light to go off before flashing)
         for i in range(len(self.code) - 1, -1, -1):  # Iterate through the code starting at the end
-            self.flash_queue.append(self.leds[f'LED_{self.code[i] + 4}'])  # Add 4 to i to get a # in range 5-8
+            self.queue.queue_add(self.leds[f'LED_{self.code[i] + 4}'], 1.3, 0.3)  # Add 4 to i to get a # in range 5-8
 
     def check_code(self, code):
         """
