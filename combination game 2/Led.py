@@ -8,7 +8,8 @@ class Led:
         # Initialize instance variables
         self.flashing = False
         self.start_time = None
-        self.flash_time = None
+        self.flash_time = 0
+        self.end_time = 0
 
         self.pin = pin
         GPIO.setup(self.pin, GPIO.OUT)
@@ -19,14 +20,26 @@ class Led:
             # If the LED is currently flashing, turn it off once the correct amount of time has passed
             if (Time.time() - self.start_time) >= self.flash_time:
                 self.off()
-                self.start_time = None
-                self.flashing = False
+                if self.end_time:
+                    self.start_time = Time.time()
+                    self.flash_time = self.end_time
+                    self.end_time = 0
+                else:
+                    self.start_time = None
+                    self.flashing = False
+
 
     # Start a flash (overriding any previous ones)
-    def flash(self, time):
+    def flash(self, time, end_time = 0):
+        """
+        :param time: Time to flash for
+        :param end_time: Time to wait at the end
+        """
+
         self.flashing = True
         self.start_time = Time.time()
         self.flash_time = time
+        self.end_time = end_time
         self.on()
 
     # Methods to turn LED on and off
