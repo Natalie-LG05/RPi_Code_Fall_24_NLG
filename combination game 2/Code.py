@@ -23,7 +23,7 @@ class Code:
 
             # If the previous led has finished, flash the next one
             if previous_finished and len(self.flash_queue):
-                self.flash_queue[-1].flash(1.3, 0.2)
+                self.flash_queue[-1].flash(1.3, 0.3)
                 self.flash_queue.pop()
                 previous_finished = False  # To ensure the last one has time to finish flashing
 
