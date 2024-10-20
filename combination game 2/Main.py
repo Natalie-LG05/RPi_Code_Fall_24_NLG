@@ -84,11 +84,15 @@ while True:
         for i in range(1,5):
             button_key = f'BUTTON_{i}'
             if buttons[button_key].register_input():
-                inputs.append(button_key)
+                # inputs.append(button_key)
+                inputs.append(i)  # Add the button's number
 
         # When button 6 is pressed, check if the code is right and reset the input list
         if buttons['BUTTON_5'].register_input():
-            print(inputs)
+            inputs_debug = []
+            for inp in inputs:
+                inputs_debug.append(f'BUTTON_{inp}')
+            print(inputs_debug)
 
             if code.check_code(inputs):
                 # TODO Flash green for feedback
@@ -115,4 +119,6 @@ while True:
     if state == 3:
         #TODO Success Protocol
         #TODO 6th Button Functionality
-        pass
+        for i in range(5,9):
+            leds[f'LED_{i}'].flash(1)
+        state = 1

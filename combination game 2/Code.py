@@ -19,13 +19,15 @@ class Code:
             for led in self.leds.values():
                 if led.flashing:  # If any of the leds are flashing, then the previous led hasn't finished yet
                     previous_finished = False
+                    break
 
             # If the previous led has finished, flash the next one
             if previous_finished:
                 self.flash_queue[-1].flash(1.3)
                 self.flash_queue.pop()
+                previous_finished = False  # To ensure the last one has time to finish flashing
 
-            if previous_finished and len(self.flash_queue):
+            if previous_finished and (len(self.flash_queue) == 0):
                 # No items left in queue and all LEDs have finished flashing; Code display has finished
                 self.display_finished = True
 
@@ -34,26 +36,41 @@ class Code:
         print(f'Displaying Code: {self.code}')
 
         # Flash the first LED in the code and queue the rest
-        self.leds[f'LED_{self.code[0]}'].flash(1.3)  # Flash the first LED in the code for 1.3 seconds
+        # self.leds[f'LED_{self.code[0]}'].flash(1.3)  # Flash the first LED in the code for 1.3 seconds
 
-        for i in range(len(self.code) - 1, 0, -1):  # Iterate through the code starting at the end
-            self.flash_queue.append(self.leds[f'LED_{self.code[i]}'])
+        # Queue all the leds to flash (including the 1st one so that it waits for the red light to go off before flashing)
+        for i in range(len(self.code) - 1, -1, -1):  # Iterate through the code starting at the end
+            self.flash_queue.append(self.leds[f'LED_{self.code[i + 4]}'])  # Add 4 to i to get a # in range 5-8
 
     def check_code(self, code):
-        if len(self.code) != len(code) : return False
+        """
+        Check if the code is correct
+        :param code: Code/inputs to check
+        """
 
-        for i in range(len(self.code)):
-            if self.code[i] == 5: 
-                if code[i] == 1 : continue
-            if self.code[i] == 6: 
-                if code[i] == 2 : continue
-            if self.code[i] == 7: 
-                if code[i] == 3 : continue
-            if self.code[i] == 8: 
-                if code[i] == 4 : continue
-            return False
+        return self.code == code
 
-        return True
+        # if len(self.code) != len(code) : return False
+
+        # for i in range(len(self.code)):
+        #     print(f'{i}: {self.code[i]}:{code[i]}')
+        #     # Since the code uses LEDs 5-8, but the inputs are 1-4:
+        #     if self.code[i] == 5:
+        #         print(f'{i}: Correct')
+        #         if code[i] == 1 : continue
+        #     if self.code[i] == 6:
+        #         print(f'{i}: Correct')
+        #         if code[i] == 2 : continue
+        #     if self.code[i] == 7:
+        #         print(f'{i}: Correct')
+        #         if code[i] == 3 : continue
+        #     if self.code[i] == 8:
+        #         print(f'{i}: Correct')
+        #         if code[i] == 4 : continue
+        #     print('Incorrect code')
+        #     return False
+        #
+        # return True
 
     def generate_code(self, length=4):
         """
@@ -62,5 +79,5 @@ class Code:
         """
         code = []
         for i in range(length):
-            code.append(randint(5, 8))
+            code.append(randint(1, 4))
         self.code = code

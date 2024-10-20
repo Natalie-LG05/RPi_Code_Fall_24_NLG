@@ -22,14 +22,12 @@ class Led:
                 self.start_time = None
                 self.flashing = False
 
-    # Start a flash
+    # Start a flash (overriding any previous ones)
     def flash(self, time):
-        if not self.flashing:
-            # If the LED isn't already flashing, begin one
-            self.on()
-            self.flashing = True
-            self.start_time = Time.time()
-            self.flash_time = time
+        self.flashing = True
+        self.start_time = Time.time()
+        self.flash_time = time
+        self.on()
 
     # Methods to turn LED on and off
     def on(self):
