@@ -16,7 +16,7 @@ class Code:
 
     def update(self, state):
         if state == 2:
-            if self.queue.previous_finished() and (not self.queue.queue_empty()):
+            if self.queue.previous_finished() and self.queue.queue_empty():
                 # No items left in queue and all LEDs have finished flashing; Code display has finished
                 self.display_finished = True
 
