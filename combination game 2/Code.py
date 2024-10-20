@@ -28,9 +28,9 @@ class Code:
 
         # Queue all the leds to flash (including the 1st one so that it waits for the red light to go off before flashing)
         for i in range(len(self.code)):  # Iterate through the code starting at the beginning
-            print(f'Adding {self.leds[f"LED_{self.code[i] + 4}"]} to queue')
+            # print(f'Adding {self.leds[f"LED_{self.code[i] + 4}"]} to queue')
             self.queue.queue_add(self.leds[f'LED_{self.code[i] + 4}'], 1.3, 0.3)  # Add 4 to i to get a # in range 5-8
-        print(f'{self.queue.queue}__{self.queue.queue_times}')
+        # print(f'{self.queue.queue}__{self.queue.queue_times}')
 
     def check_code(self, code):
         """

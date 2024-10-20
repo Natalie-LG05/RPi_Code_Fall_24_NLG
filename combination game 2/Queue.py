@@ -20,7 +20,6 @@ class Queue:
         """ Checks if any LEDs are currently in the middle of flashing """
         for led in self.leds.values():
             if led.flashing:
-                # print(f'{led} is flashing')
                 return False
         print('No LED is flashing')
         return True
@@ -34,5 +33,7 @@ class Queue:
         self.queue_times.append((time, end_time))
 
     def pop(self):
+        print(self.queue)
         self.queue.pop(0)
         self.queue_times.pop(0)
+        print(self.queue)
