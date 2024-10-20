@@ -12,7 +12,7 @@ class Queue:
         # Flash LEDs when previous is finished
         # If the previous led has finished, flash the next one (if there is a next one)
         if self.previous_finished() and (not self.queue_empty()):
-            print(f'Flashing LED: {self.queue[0]}')
+            # print(f'Flashing LED: {self.queue[0]}')
             self.queue[0].flash(self.queue_times[0][0], self.queue_times[0][1])
             self.pop()
 

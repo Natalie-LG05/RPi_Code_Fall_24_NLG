@@ -123,7 +123,7 @@ while True:
                 state = 3
                 # TODO Success Protocol
             else:  # Request new code, or guess is wrong
-                # leds['LED_9'].flash(1, 0.3)  # Flash red for feedback
+                leds['LED_9'].flash(1, 0.3)  # Flash red for feedback
 
                 code.generate_code() # generate new code
 
@@ -144,6 +144,6 @@ while True:
         #TODO Success Protocol
         if queue.queue_empty():
             for i in range(5,9):
-                queue.queue_add(leds[f'LED_{i}'], 1, 0.3)
+                leds[i].flash(1, 0.3)
             state = 1
         #TODO 6th Button Functionality
