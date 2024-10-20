@@ -111,7 +111,11 @@ while True:
                 state = 3
                 # TODO Success Protocol
             else:  # Request new code, or guess is wrong
-                leds['LED_9'].flash(1, 0.3)  # Flash red for feedback
+                # leds['LED_9'].flash(1, 0.3)  # Flash red for feedback
+                for i in range(3):
+                    for led in leds.values():
+                        queue.queue_add(led, 0.2, 0.05)
+
                 code.generate_code() # generate new code
 
                 state = 2 # Enter display code state
