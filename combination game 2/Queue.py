@@ -19,8 +19,8 @@ class Queue:
     def previous_finished(self):
         """ Checks if any LEDs are currently in the middle of flashing """
         for led in self.leds.values():
-            print(led)
             if led.flashing:
+                print(f'{led} is flashing')
                 return False
         return True
 
