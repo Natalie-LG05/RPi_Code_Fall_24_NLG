@@ -144,6 +144,6 @@ while True:
         #TODO Success Protocol
         if queue.queue_empty():
             for i in range(5,9):
-                leds[i].flash(1, 0.3)
+                leds[f'LED_{i}'].flash(1, 0.3)
             state = 1
         #TODO 6th Button Functionality
