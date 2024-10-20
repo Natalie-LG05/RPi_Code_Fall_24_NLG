@@ -22,12 +22,12 @@ class Code:
                     break
 
             # If the previous led has finished, flash the next one
-            if previous_finished:
+            if previous_finished and len(self.flash_queue):
                 self.flash_queue[-1].flash(1.3)
                 self.flash_queue.pop()
                 previous_finished = False  # To ensure the last one has time to finish flashing
 
-            if previous_finished and (len(self.flash_queue) == 0):
+            if previous_finished and (not len(self.flash_queue)):
                 # No items left in queue and all LEDs have finished flashing; Code display has finished
                 self.display_finished = True
 
@@ -40,7 +40,7 @@ class Code:
 
         # Queue all the leds to flash (including the 1st one so that it waits for the red light to go off before flashing)
         for i in range(len(self.code) - 1, -1, -1):  # Iterate through the code starting at the end
-            self.flash_queue.append(self.leds[f'LED_{self.code[i + 4]}'])  # Add 4 to i to get a # in range 5-8
+            self.flash_queue.append(self.leds[f'LED_{self.code[i] + 4}'])  # Add 4 to i to get a # in range 5-8
 
     def check_code(self, code):
         """
