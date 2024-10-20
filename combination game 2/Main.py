@@ -112,7 +112,7 @@ while True:
                 # Code is correct, enter success state (state 3)
                 for i in range(3):
                     for led in leds.values():
-                        queue.queue_add(led, 0.2, 0.05)
+                        queue.queue_add(led, 0.05, 0.015)
                 for i in range(5):
                     for led in leds.values():
                         led.on()
