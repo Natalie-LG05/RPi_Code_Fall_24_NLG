@@ -33,8 +33,8 @@ buttons = {
     'BUTTON_3': Button(21, led_md1=leds["LED_3"]),  # yellow
     'BUTTON_4': Button(20, led_md1=leds["LED_4"]),  # red
 
-    'BUTTON_5': Button(19),  # green
-    'BUTTON_6': Button(18),  # red
+    'BUTTON_5': Button(19),  # enter button
+    'BUTTON_6': Button(18),  # change mode button
 }
 
 # Setup the code
