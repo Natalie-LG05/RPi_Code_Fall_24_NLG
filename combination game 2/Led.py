@@ -33,7 +33,7 @@ class Led:
     def flash(self, time, end_time = 0):
         """
         :param time: Time to flash for
-        :param end_time: Time to wait at the end
+        :param end_time: Time to wait at the end; Defaults to 0
         """
 
         self.flashing = True

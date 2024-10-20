@@ -100,7 +100,7 @@ while True:
                 state = 3
                 # TODO Success Protocol
             else:  # Request new code, or guess is wrong
-                leds['LED_8'].flash(2)  # Flash red for feedback
+                leds['LED_8'].flash(1, 0.2)  # Flash red for feedback
                 code.generate_code() # generate new code
 
                 state = 2 # Enter display code state
@@ -120,5 +120,5 @@ while True:
         #TODO Success Protocol
         #TODO 6th Button Functionality
         for i in range(5,9):
-            leds[f'LED_{i}'].flash(1)
+            leds[f'LED_{i}'].flash(2.5)
         state = 1
