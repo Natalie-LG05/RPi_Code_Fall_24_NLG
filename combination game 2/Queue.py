@@ -21,7 +21,7 @@ class Queue:
         for led in self.leds.values():
             if led.flashing:
                 return False
-        print('No LED is flashing')
+        # print('No LED is flashing')
         return True
 
     def queue_empty(self):
