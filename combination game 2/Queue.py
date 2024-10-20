@@ -33,7 +33,7 @@ class Queue:
         self.queue_times.append((time, end_time))
 
     def pop(self):
-        print(self.queue)
+        # print(self.queue)
         self.queue.pop(0)
         self.queue_times.pop(0)
-        print(self.queue)
+        # print(self.queue)
