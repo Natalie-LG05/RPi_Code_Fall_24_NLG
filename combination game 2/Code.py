@@ -16,7 +16,7 @@ class Code:
         if state == 2:
             # Flash LEDs when previous is finished
             previous_finished = True
-            for led in self.leds:
+            for led in self.leds.values():
                 if led.flashing:  # If any of the leds are flashing, then the previous led hasn't finished yet
                     previous_finished = False
 
@@ -31,15 +31,29 @@ class Code:
 
     def display_code(self):
         self.display_finished = False
+        print(f'Displaying Code: {self.code}')
 
         # Flash the first LED in the code and queue the rest
         self.leds[f'LED_{self.code[0]}'].flash(1.3)  # Flash the first LED in the code for 1.3 seconds
 
-        for i in range(len(self.code), 0, -1):  # Iterate through the code starting at the end
+        for i in range(len(self.code) - 1, 0, -1):  # Iterate through the code starting at the end
             self.flash_queue.append(self.leds[f'LED_{self.code[i]}'])
 
     def check_code(self, code):
-        return code == self.code
+        if len(self.code) != len(code) : return False
+
+        for i in range(len(self.code)):
+            if self.code[i] == 5: 
+                if code[i] == 1 : continue
+            if self.code[i] == 6: 
+                if code[i] == 2 : continue
+            if self.code[i] == 7: 
+                if code[i] == 3 : continue
+            if self.code[i] == 8: 
+                if code[i] == 4 : continue
+            return False
+
+        return True
 
     def generate_code(self, length=4):
         """
@@ -48,5 +62,5 @@ class Code:
         """
         code = []
         for i in range(length):
-            code.append(randint(1, 4))
+            code.append(randint(5, 8))
         self.code = code

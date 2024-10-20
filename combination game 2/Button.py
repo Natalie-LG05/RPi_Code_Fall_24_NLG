@@ -38,6 +38,8 @@ class Button:
             # Only register input if this is the first frame it has been pressed for
             self.was_pressed = True
             return True
+        elif self.is_pressed():
+            return False
         else:
             # If button is up, then reset the state
             self.was_pressed = False

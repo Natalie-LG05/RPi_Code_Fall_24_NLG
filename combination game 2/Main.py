@@ -21,17 +21,17 @@ leds = {
 
     # Second set of LEDs
     'LED_5': Led(13),  # green
-    'LED_6': Led(16),  # red
+    'LED_6': Led(16),  # blue
     'LED_7': Led(27),  # yellow
-    'LED_8': Led(26),  # blue
+    'LED_8': Led(26),  # red
 }
 
 buttons = {
     # First set of Buttons
-    'BUTTON_1': Button(23, led_md1=leds["LED_G1"]),  # green
-    'BUTTON_2': Button(22, led_md1=leds["LED_B1"]),  # blue
-    'BUTTON_3': Button(21, led_md1=leds["LED_Y1"]),  # yellow
-    'BUTTON_4': Button(20, led_md1=leds["LED_R1"]),  # red
+    'BUTTON_1': Button(23, led_md1=leds["LED_1"]),  # green
+    'BUTTON_2': Button(22, led_md1=leds["LED_2"]),  # blue
+    'BUTTON_3': Button(21, led_md1=leds["LED_3"]),  # yellow
+    'BUTTON_4': Button(20, led_md1=leds["LED_4"]),  # red
 
     'BUTTON_5': Button(19),  # green
     'BUTTON_6': Button(18),  # red
@@ -91,11 +91,12 @@ while True:
             print(inputs)
 
             if code.check_code(inputs):
+                # TODO Flash green for feedback
                 # Code is correct, enter success state (state 3)
                 state = 3
                 # TODO Success Protocol
             else:  # Request new code, or guess is wrong
-                leds['LED_6'].flash(2)  # Flash red for feedback
+                leds['LED_8'].flash(2)  # Flash red for feedback
                 code.generate_code() # generate new code
 
                 state = 2 # Enter display code state
@@ -111,7 +112,7 @@ while True:
 
     # Mode 3 behavior;
     # State 3: Success State
-    if state -- 3:
+    if state == 3:
         #TODO Success Protocol
         #TODO 6th Button Functionality
         pass
