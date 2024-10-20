@@ -24,6 +24,10 @@ leds = {
     'LED_6': Led(16),  # blue
     'LED_7': Led(27),  # yellow
     'LED_8': Led(26),  # red
+
+    # Extra red and green LED (for correct and incorrect / right and wrong)
+    'LED_9': Led(25),   # red
+    'LED_10': Led(24),  # green
 }
 
 buttons = {
@@ -100,7 +104,7 @@ while True:
                 state = 3
                 # TODO Success Protocol
             else:  # Request new code, or guess is wrong
-                leds['LED_8'].flash(1, 0.3)  # Flash red for feedback
+                leds['LED_9'].flash(1, 0.3)  # Flash red for feedback
                 code.generate_code() # generate new code
 
                 state = 2 # Enter display code state
