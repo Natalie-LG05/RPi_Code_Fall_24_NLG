@@ -61,8 +61,10 @@ def on_exit():
 
 # Main Code
 print('Starting!')
-# The current Mode, or State, of the program
-state = 1  # Begin in mode 1
+# The current State of the program
+state = 1  # Begin in state 1
+mode = 1  # Begin in success protocol mode 1
+modes_amount = 2  # Amount of modes
 
 # Input tracking
 inputs = []
@@ -81,7 +83,7 @@ while True:
     for led in leds.values():
         led.update(state)
 
-    # Run all the buttons' on_press() methods for the current state/mode
+    # Run all the buttons' on_press() methods for the current state
     for button_key in buttons.keys():
         buttons[button_key].while_pressed(state)
 
@@ -91,8 +93,7 @@ while True:
     # Update the queue instance (for flashing LEDs in sequence)
     queue.update(state)
 
-    # Mode (state) 1 behavior
-    # State 1 (Main state): Show, input, and guess code
+    # State 1 (Main state) Behavior: Show, input, and guess code
     if state == 1:
         # Track input for buttons 1-4
         for i in range(1,5):
@@ -130,19 +131,24 @@ while True:
 
             inputs.clear() # reset inputs
 
-    # Mode 2 behavior;
-    # State 2: Show the code then return to main state (state 1)
+    # State 2 Behavior: Show the code then return to main state (state 1)
     if state == 2:
         if code.display_finished: # Return to state 1 once the code has finshed being shown
             state = 1
 
-    # Mode 3 behavior;
-    # State 3: Success State
+    # State 3: Success State Behavior
     if state == 3:
+        if buttons['BUTTON_6'].register_input():
+            mode += 1
+            if mode > modes_amount:
+                mode = 1
+
         #TODO Success Protocol
         leds_list = []
         for i in range(5,9):
             leds_list.append(leds[f'LED_{i}'])
         queue.queue_add(leds_list, 1, 0.3)
-        state = 1
-        #TODO 6th Button Functionality
+
+        if buttons['BUTTON_5'].is_pressed() and buttons['BUTTON_6'].is_pressed():
+            # Exit success state when button 5 and 6 are pressed at the same time
+            state = 1
