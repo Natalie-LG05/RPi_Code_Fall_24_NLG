@@ -35,10 +35,10 @@ leds = {
 
 buttons = {
     # First set of Buttons
-    'BUTTON_1': Button(23, led_md1=leds["LED_1"]),  # green
-    'BUTTON_2': Button(22, led_md1=leds["LED_2"]),  # blue
-    'BUTTON_3': Button(21, led_md1=leds["LED_3"]),  # yellow
-    'BUTTON_4': Button(20, led_md1=leds["LED_4"]),  # red
+    'BUTTON_1': Button(23, led_st1=leds["LED_1"]),  # green
+    'BUTTON_2': Button(22, led_st1=leds["LED_2"]),  # blue
+    'BUTTON_3': Button(21, led_st1=leds["LED_3"]),  # yellow
+    'BUTTON_4': Button(20, led_st1=leds["LED_4"]),  # red
 
     'BUTTON_5': Button(19),  # enter button
     'BUTTON_6': Button(18),  # change mode button
@@ -110,15 +110,12 @@ while True:
             print(inputs_debug)
 
             if code.check_code(inputs):
-                # TODO Flash green for feedback
                 # Code is correct, enter success state (state 3)
-                for i in range(10):
-                    for led in leds.values():
-                        queue.queue_add(led, 0.025, 0.005)
-                for i in range(10):
-                    queue.queue_add(leds.values(), 0.075, 0.075)
+                leds['LED_1'].flash(1, 0.3)  # Flash green for feedback
+                leds['LED_5'].flash(1, 0.3)  # Flash green for feedback
+                leds['LED_10'].flash(1, 0.3)  # Flash green for feedback
+
                 state = 3
-                # TODO Success Protocol
             else:  # Request new code, or guess is wrong
                 leds['LED_4'].flash(1, 0.3)  # Flash red for feedback
                 leds['LED_8'].flash(1, 0.3)  # Flash red for feedback
@@ -143,12 +140,33 @@ while True:
             if mode > modes_amount:
                 mode = 1
 
-        #TODO Success Protocol
-        leds_list = []
-        for i in range(5,9):
-            leds_list.append(leds[f'LED_{i}'])
-        queue.queue_add(leds_list, 1, 0.3)
+            queue.clear()
+
+        # TODO Mode logic
+        if queue.queue_empty():
+            leds_list = []
+
+            if mode == 1:
+                for i in range(10):
+                    for led in leds.values():
+                        queue.queue_add(led, 0.025, 0.005)
+                for i in range(10):
+                    queue.queue_add(leds.values(), 0.075, 0.075)
+            elif mode == 2:
+                for i in range(5,9):
+                    leds_list.append(leds[f'LED_{i}'])
+                queue.queue_add(leds_list, 1, 0.3)
+
+                leds_list.clear()
+                for i in range(1, 5):
+                    leds_list.append(leds[f'LED_{i}'])
+                for i in range(9, 11):
+                    leds_list.append(leds[f'LED_{i}'])
+                queue.queue_add(leds_list, 1, 0.3)
 
         if buttons['BUTTON_5'].is_pressed() and buttons['BUTTON_6'].is_pressed():
             # Exit success state when button 5 and 6 are pressed at the same time
+            queue.clear()
+
+            # TODO figure out flashing between states
             state = 1

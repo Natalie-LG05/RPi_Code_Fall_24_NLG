@@ -44,3 +44,9 @@ class Queue:
         self.queue.pop(0)
         self.queue_times.pop(0)
         # print(self.queue)
+
+    def clear(self):
+        self.queue.clear()
+        self.queue_times.clear()
+        for led in self.leds.values():
+            led.stop_flash()

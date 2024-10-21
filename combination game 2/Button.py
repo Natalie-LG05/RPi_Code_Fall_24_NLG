@@ -3,23 +3,23 @@
 import RPi.GPIO as GPIO
 
 class Button:
-    def __init__(self, pin, led_md1=None):
+    def __init__(self, pin, led_st1=None):
         """
-        Mode 1: Assign an led to turn on and off
+        State 1: Assign an led to turn on and off
 
         :param pin:
-        :param led_md1: Assign an LED to control via mode 1
+        :param led_st1: Assign an LED to control during state 1
         """
         self.was_pressed = False
 
         self.pin = pin
-        self.led_md1 = led_md1
+        self.led_md1 = led_st1
         GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     def is_pressed(self):
         return GPIO.input(self.pin)
 
-    # Define continuous behavior while up or down for each mode/state
+    # Define continuous behavior while up or down for each state
     def while_pressed(self, state):
         if self.is_pressed():
             if state == 1 and self.led_md1:  # Turn md1 led on

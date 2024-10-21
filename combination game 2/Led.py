@@ -42,6 +42,11 @@ class Led:
         self.end_time = end_time
         self.on()
 
+    def stop_flash(self):
+        self.off()
+        self.flashing = False
+        self.start_time = None
+
     # Methods to turn LED on and off
     def on(self):
         GPIO.output(self.pin, GPIO.HIGH)
