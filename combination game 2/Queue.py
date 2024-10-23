@@ -35,7 +35,7 @@ class Queue:
         return len(self.queue) == 0
 
     def queue_add(self, leds, time, end_time = 0):
-        """ Adds LED to the end of the queue """
+        """ Adds LED to the end of the queue, or a list of LEDs to be flashed together """
         self.queue.append(leds)
         self.queue_times.append((time, end_time))
 

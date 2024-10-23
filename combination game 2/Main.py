@@ -109,6 +109,8 @@ while True:
                 inputs_debug.append(f'BUTTON_{inp}')
             print(inputs_debug)
 
+            # TODO Do I need to turn all LEDs off when the enter button is pressed? (test holding down a button and
+            #  pressing enter at the same time
             if code.check_code(inputs):
                 # Code is correct, enter success state (state 3)
                 leds['LED_1'].flash(1, 0.3)  # Flash green for feedback
@@ -136,7 +138,7 @@ while True:
     # State 3: Success State Behavior
     if state == 3:
         if buttons['BUTTON_6'].register_input():
-            mode += 1
+            mode += 1  # Need to update the modes_amount variable every time a new mode is added
             if mode > modes_amount:
                 mode = 1
 
@@ -147,10 +149,10 @@ while True:
             leds_list = []
 
             if mode == 1:
-                for i in range(10):
+                for i in range(20):
                     for led in leds.values():
                         queue.queue_add(led, 0.025, 0.005)
-                for i in range(10):
+                for i in range(20):
                     queue.queue_add(leds.values(), 0.075, 0.075)
             elif mode == 2:
                 for i in range(5,9):
