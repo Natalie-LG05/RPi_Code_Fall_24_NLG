@@ -84,7 +84,7 @@ def calibrate():
 
    distance_avg = 0
    for _ in range(CALIBRATIONS):  # note the _ used
-       travel_time - get_travel_time()
+       travel_time = get_travel_time()
        raw_distance = calculate_raw_distance(travel_time)
        distance_avg += raw_distance
        sleep(CALIBRATION_DELAY)
