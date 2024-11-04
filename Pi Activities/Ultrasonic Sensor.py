@@ -6,10 +6,10 @@ from random import random
 USING_SENSOR = False
 DEBUG = False  # False to not print some messages, True to print some (debug) messages
 SETTLE_TIME = 2  # 2 seconds to settle the sensor from when the program starts running
-CALIBRATIONS = 5
+CALIBRATIONS = 5  # amount of calibration tests to do
 CALIBRATION_DELAY = 1  # pause for 1 seconds between calibrations
 TRIG_DURATION = 0.00001  # seconds
-SPEED_OF_SOUND = 343  # m/s
+SPEED_OF_SOUND = 343  # in m/s
 
 if USING_SENSOR:
     # sensor setup
@@ -25,10 +25,33 @@ if USING_SENSOR:
     GPIO.setup(ECHO, GPIO.IN)
 
 # functions
-def get_travel_time():
+def get_travel_time() -> float:
     """
     Gets the time in seconds that it takes for a signal to travel from the sensor to an object and back
     """
+
+    # Trigger the sensor
+    GPIO.output(TRIG, GPIO.HIGH)
+    sleep(TRIG_DURATION)
+    GPIO.output(TRIG, GPIO.LOW)
+
+    if DEBUG:
+        print('\t\tGetting travel time')
+
+    # wait for the echo to start
+    while GPIO.input(ECHO) == GPIO.LOW:
+        start = time()
+
+    # Wait for the echo to finish
+    while GPIO.input(ECHO) == GPIO.HIGH:
+        end = time()
+
+    if DEBUG:
+        print(f'\t\tMeasured travel time: {end - start}')
+
+    duration = end - start
+    return duration
+
 
 def calculate_raw_distance(travel_time):
     """
@@ -36,16 +59,57 @@ def calculate_raw_distance(travel_time):
     :return: Returns the distance in cm between the ultrasonic sensor and another object
     """
 
+    distance = travel_time * SPEED_OF_SOUND  # distance in meters
+    distance /= 2  # divide by two since the sound traveled there and back
+    distance *= 100  # convert to cm
+
+    if DEBUG:
+        print(f'\t\tMeasured raw distance: {distance}cm')
+
+    return distance
+
+
 def calibrate():
    """
     Calibrates the sensor
     :return: Returns a correction factor for our measurements
    """
 
+   print('Calibrating...')
+   print('\tPlace the sensor a measured distance away from an object')
+
+   known_distance = float(input('\tWhat is the measured distance (cm)?: '))
+
+   print('\tGetting calibration measurements...')
+
+   distance_avg = 0
+   for _ in range(CALIBRATIONS):  # note the _ used
+       travel_time - get_travel_time()
+       raw_distance = calculate_raw_distance(travel_time)
+       distance_avg += raw_distance
+       sleep(CALIBRATION_DELAY)
+
+   distance_avg /= CALIBRATIONS
+
+   correction_factor = known_distance / distance_avg
+
+   if DEBUG:
+       print(f'\t\tAverage distance: {distance_avg}')
+       print(f'\t\tCorrection factor: {correction_factor}')
+
+   print('Done Calibrating\n')
+   return correction_factor
+
+
 def settle():
     """
     Allows the sensor to settle for the specified `SETTLE_TIME`
     """
+
+    print(f'Waiting for sensor to settle - {SETTLE_TIME}sec')
+    GPIO.output(TRIG, GPIO.LOW)
+    sleep(SETTLE_TIME)
+
 
 ##### Main Code #####
 if USING_SENSOR:

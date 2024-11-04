@@ -117,6 +117,7 @@ while True:
                 leds['LED_5'].flash(1, 0.3)  # Flash green for feedback
                 leds['LED_10'].flash(1, 0.3)  # Flash green for feedback
 
+                mode = 1
                 state = 3
             else:  # Request new code, or guess is wrong
                 leds['LED_4'].flash(1, 0.3)  # Flash red for feedback
