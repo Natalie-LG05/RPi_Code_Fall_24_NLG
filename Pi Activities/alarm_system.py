@@ -18,6 +18,9 @@ try:
         if GPIO.input(SENSOR):
             print('Motion Detected')
             GPIO.output(LED, GPIO.HIGH)
+        else:
+            print('No Motion')
+            GPIO.output(LED, GPIO.LOW)
 except KeyboardInterrupt:
     GPIO.cleanup()
 
