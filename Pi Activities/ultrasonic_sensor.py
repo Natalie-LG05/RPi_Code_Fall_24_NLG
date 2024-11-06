@@ -1,3 +1,5 @@
+# Natalie Gates; Pi Activity 3; 11/4/24 - 11/5/24
+
 from time import sleep, time
 from random import random
 
