@@ -1,17 +1,18 @@
-# Natalie Gates; Pi Activity 3; 11/4/24 - 11/5/24
-
+# Natalie Gates; Pi Activity 3; 11/4/24 - 11/7/24
 from time import sleep, time
 from random import random
 
+
 # Set USING_SENSOR to False if we are simulating
 # Set to True if you're using the sensor to pick up times
-USING_SENSOR = True
-DEBUG = True  # False to not print some messages, True to print some (debug) messages
+USING_SENSOR = False
+DEBUG = False  # False to not print some messages, True to print some (debug) messages
 SETTLE_TIME = 2  # 2 seconds to settle the sensor from when the program starts running
 CALIBRATIONS = 5  # amount of calibration tests to do
 CALIBRATION_DELAY = 1  # pause for 1 seconds between calibrations
 TRIG_DURATION = 0.00001  # seconds
 SPEED_OF_SOUND = 343  # in m/s
+
 
 if USING_SENSOR:
     # sensor setup
@@ -26,7 +27,38 @@ if USING_SENSOR:
     GPIO.setup(TRIG, GPIO.OUT)
     GPIO.setup(ECHO, GPIO.IN)
 
+
 # functions
+def insertion_sort(list_):
+    """
+    Sorts a list using insertion sort
+    \nCode was written and tested in a different document
+    \nHowever this version expects every value to end with 'cm'
+    """
+    for i in range(1, len(list_)):  # Iterate through from the 2nd item to the last item
+        if DEBUG:
+            print(f'\t\t\tPass {i}; Sorting {list_[i]}')
+
+        for j in range(i-1, -1, -1):  # Increment backwards starting to the left of the item being sorted
+            if DEBUG:
+                print(f'\t\t\t\tj={j}')
+                print(f'\t\t\t\tComparing {list_[j+1]} with {list_[j]}')
+
+            if float(list_[j][:-2]) > float(list_[j+1][:-2]):  # Need to trim the cm off each string value to perform comparison
+                # Move the item over if it isn't in place
+                list_[j], list_[j+1] = list_[j+1], list_[j]
+
+                if DEBUG:
+                    print(f'\t\t\t\tSwapping {list_[j+1]} and {list_[j]}')
+                    print(f'\t\t\t\tList: {list_}')
+
+            else:  # Item is in place; It is sorted
+                if DEBUG:
+                    print('\t\t\t\tBreaking')
+                    print(f'\t\t\t\tList: {list_}')
+                break
+
+
 def get_travel_time() -> float:
     """
     Gets the time in seconds that it takes for a signal to travel from the sensor to an object and back
@@ -121,13 +153,17 @@ else:
     # in the case of just simulating it
     correction_factor = 1
 
+distances = []  # Initialize the list
+
 input('Press enter to begin...')  # To pause program until user hits enter
 print('Getting measurements...')
 
+
 while True:
+    print('Measuring...')
     if USING_SENSOR:
         # get the actual travel time of the sound wave
-        print('\tMeasuring with Sensor')  # \t is like \n but for indent/tabs instead of new lines
+        # print('\tMeasuring with Sensor')  # \t is like \n but for indent/tabs instead of new lines
         travel_time = get_travel_time()
     else:
         # make up a travel time since we are simulating it (poorly lol)
@@ -139,15 +175,25 @@ while True:
     # adjust with the correction factor
     true_distance = raw_distance * correction_factor
 
+    # add the distance to the list
+    distances.append(f'{true_distance:.4f}cm')
+
     # output some info about what just happened
-    print(f'\t\tTravel Time: {travel_time:.4f}sec')
-    print(f'\t\tDistance: {true_distance:.4f}cm')
+    print(f'\tTravel Time: {travel_time:.4f}sec')
+    print(f'\tDistance: {true_distance:.4f}cm')
 
     # prompt for another
-    i = input("Continue? (Y/n) ")
+    i = input('\tGet another measurement? (Y/n):')
     if i in ['n', 'N', 'No', 'NO', 'stop']:
         break
 
-print('done')
+
+print('Done')
+
+# Output and sort the distances
+print(f'Unsorted measurements: \n{distances:}')
+insertion_sort(distances)  # sort the list
+print(f'Sorted measurements: \n{distances:}')
+
 if USING_SENSOR:
     GPIO.cleanup()
