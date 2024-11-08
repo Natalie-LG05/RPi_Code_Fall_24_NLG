@@ -17,6 +17,9 @@ GPIO.setup(SENSOR, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(LED, GPIO.OUT)
 GPIO.setup(BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
+GPIO.output(LED, GPIO.LOW)  # Make sure the LED starts off
+
+armed = True
 
 # Main
 try:
@@ -34,10 +37,19 @@ try:
 
             if not disarmed:
                 GPIO.output(LED, GPIO.HIGH)
+                print('Intruder Alert!!!!!!!')
+
+            armed = False
+            print('Press button to re-arm')
         else:
-            print('No Motion')
-            GPIO.output(LED, GPIO.LOW)
+            # print('No Motion')
+            pass
+
+        if not armed:
+            if GPIO.input(BUTTON):
+                armed = True
+                print('Alarm re-armed successfully')
+
 except KeyboardInterrupt:
     GPIO.cleanup()
-
-print('Goodbye. Ciao. Adios. Au Revoir.')
+    print('Goodbye. Ciao. Adios. Au Revoir.')
