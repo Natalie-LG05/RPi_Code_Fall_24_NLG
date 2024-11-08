@@ -40,9 +40,7 @@ try:
                 print('Intruder Alert!!!!!!!')
 
             input('Press enter to re-arm ')
-        else:
-            # print('No Motion')
-            pass
+            print('Alarm Ready')
 
 except KeyboardInterrupt:
     GPIO.cleanup()
