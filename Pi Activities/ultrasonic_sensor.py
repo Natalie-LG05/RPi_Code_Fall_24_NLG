@@ -5,7 +5,7 @@ from random import random
 
 # Set USING_SENSOR to False if we are simulating
 # Set to True if you're using the sensor to pick up times
-USING_SENSOR = False
+USING_SENSOR = True
 DEBUG = False  # False to not print some messages, True to print some (debug) messages
 SETTLE_TIME = 2  # 2 seconds to settle the sensor from when the program starts running
 CALIBRATIONS = 5  # amount of calibration tests to do
