@@ -40,6 +40,7 @@ try:
                 print('\tIntruder Alert!!!!!!!')
 
             input('\tPress enter to re-arm ')
+            GPIO.output(LED, GPIO.LOW)
             print('Alarm Ready\n\n')
 
 except KeyboardInterrupt:
