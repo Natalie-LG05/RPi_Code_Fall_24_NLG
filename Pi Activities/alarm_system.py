@@ -19,38 +19,30 @@ GPIO.setup(BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 GPIO.output(LED, GPIO.LOW)  # Make sure the LED starts off
 
-armed = True
-print('Alarm Ready')
 
 # Main
+print('Alarm Ready')
 try:
     while True:
-        if armed:
-            if GPIO.input(SENSOR):
-                print('Motion Detected')
+        if GPIO.input(SENSOR):
+            print('Motion Detected')
 
-                start_time = time.time()
-                disarmed = False
-                while time.time() - start_time < DISARM_TIME:
-                    if GPIO.input(BUTTON):
-                        disarmed = True
-                        print('Disarmed successfully')
-                        break
+            start_time = time.time()
+            disarmed = False
+            while time.time() - start_time < DISARM_TIME:
+                if GPIO.input(BUTTON):
+                    disarmed = True
+                    print('Disarmed successfully')
+                    break
 
-                if not disarmed:
-                    GPIO.output(LED, GPIO.HIGH)
-                    print('Intruder Alert!!!!!!!')
+            if not disarmed:
+                GPIO.output(LED, GPIO.HIGH)
+                print('Intruder Alert!!!!!!!')
 
-                armed = False
-                print('Press button to re-arm')
-            else:
-                # print('No Motion')
-                pass
-
-        if not armed:
-            if GPIO.input(BUTTON):
-                armed = True
-                print('Alarm re-armed successfully')
+            input('Press enter to re-arm ')
+        else:
+            # print('No Motion')
+            pass
 
 except KeyboardInterrupt:
     GPIO.cleanup()
