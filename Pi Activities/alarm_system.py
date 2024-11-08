@@ -20,6 +20,7 @@ GPIO.setup(BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.output(LED, GPIO.LOW)  # Make sure the LED starts off
 
 armed = True
+print('Alarm Ready')
 
 # Main
 try:
