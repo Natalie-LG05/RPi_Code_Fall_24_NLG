@@ -6,10 +6,10 @@ LED_S = 17
 LED_C = 22
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setmode(BUTTON_A, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-GPIO.setmode(BUTTON_B, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-GPIO.setmode(LED_S, GPIO.OUT)
-GPIO.setmode(LED_C, GPIO.OUT)
+GPIO.setup(BUTTON_A, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+GPIO.setup(BUTTON_B, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+GPIO.setup(LED_S, GPIO.OUT)
+GPIO.setup(LED_C, GPIO.OUT)
 
 try:
     while True:
