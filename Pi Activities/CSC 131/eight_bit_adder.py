@@ -55,7 +55,7 @@ class EightBitAdder:
         sum_bit_list.insert(0, carry_out)
 
         self.debug(f'Finished Adding:\n\t   {bit_list_1}\n + \t   {bit_list_2}')
-        self.debug(f'Result:]t{sum_bit_list}')
+        self.debug(f'Result:\t{sum_bit_list}')
 
         return sum_bit_list
 
@@ -70,12 +70,13 @@ class EightBitAdder:
     def full_adder(self, carry_in, input_a, input_b):
         """
         Takes in Cin, A, and B. Applies Full Adder Logic
-        using bitwise operators (and a half adder function) to produce teh sum bit and the carry bit
+        using bitwise operators (and a half adder function) to produce the sum bit and the carry bit
         """
-        sum_bit, carry_bit = self.half_adder(input_a, input_b)
-        sum_bit, carry_bit = self.half_adder(sum_bit, carry_in)
+        sum_bit_1, carry_bit_1 = self.half_adder(input_a, input_b)
+        sum_bit_2, carry_bit_2 = self.half_adder(sum_bit_1, carry_in)
+        carry_bit = carry_bit_1 or carry_bit_2
 
-        return sum_bit, carry_bit
+        return sum_bit_1, carry_bit
 
     def illuminate(self, bit_list):
         """Lights up the corresponding LEDs for the list"""
