@@ -77,7 +77,7 @@ class EightBitAdder:
         sum_bit_2, carry_bit_2 = self.half_adder(sum_bit_1, carry_in)
         carry_bit = carry_bit_1 | carry_bit_2
 
-        return sum_bit_1, carry_bit
+        return sum_bit_2, carry_bit
 
     def illuminate(self, bit_list):
         """Lights up the corresponding LEDs for the list"""
