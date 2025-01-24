@@ -48,6 +48,7 @@ class EightBitAdder:
 
             sum_bit, carry_out = self.full_adder(carry_in, input_a, input_b)
             self.debug(f'Added Column: {carry_in} {input_a} {input_b}')
+            self.debug(f'Got sum: {sum_bit} and carry: {carry_out}')
             sum_bit_list[position] = sum_bit
 
             position -= 1
@@ -74,7 +75,7 @@ class EightBitAdder:
         """
         sum_bit_1, carry_bit_1 = self.half_adder(input_a, input_b)
         sum_bit_2, carry_bit_2 = self.half_adder(sum_bit_1, carry_in)
-        carry_bit = carry_bit_1 or carry_bit_2
+        carry_bit = carry_bit_1 | carry_bit_2
 
         return sum_bit_1, carry_bit
 
