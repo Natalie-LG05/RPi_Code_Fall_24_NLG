@@ -1,0 +1,71 @@
+MAKE SURE TO READ THIS ENTIRE FILE AND UNDERSTAND IT BEFORE ATTEMPTING IT.
+
+To connect to LaTechWPA2, you will have to make some changes to a settings file.
+This is a very important file and therefore you want to be CAREFUL when making
+adjustments to this file. Make sure to type out everything accurately and
+carefully.
+
+1. In a terminal window, navigate to the directory "/etc/wpa_supplicant/" 
+using the command below
+	cd /etc/wpa_supplicant/
+
+2. There should be a file called wpa_supplicant.conf in this directory. You can
+list the files in any directory in which you currently are using the command
+below in the terminal
+	ls -l
+
+If you don't see the wpa_supplicant.conf file, then you are in the wrong
+directory. Don't proceed unless you can see that file.
+
+3. You will now need to edit the file to give it your tech credentials. Open the
+file using the command below
+	sudo leafpad wpa_supplicant.conf
+
+This should open the file using the program leafpad (which is a basic text
+editor) while also giving your administrator privileges (which you need since
+you are about to change a settings file).
+
+4. In that file, you should see a lot of information including wireless networks
+that your raspberry pi has already been connected to in its past. One of the
+networks that has been inserted for you is LaTechWPA2 and that is the only
+section of this file that you will be changing. If you make any other changes to
+this file (intentionally or accidentally), there is a chance that your wireless
+will not work for any network until that change is rectified.
+
+5. There should be two lines in the LaTechWPA2 section that you will need to
+change.
+5a. Change the identity field to contain your tech user name i.e. the first 6
+characters/numbers from your tech email acount. Make sure to leave the rest of
+that line as it is i.e. quotation marks, equals sign, etc.
+
+	identity="aaa111"
+
+5b. Change the password field to contain the password you use for your tech
+email account. It should also be placed within the quotation marks.
+
+	password="thisisabadpassword"
+
+**Admittedly this is not a very secure way of storing the password for anything
+but it is the easiest. If you are interested in using more secure ways, google
+is your friend. Look into it once you've successfully connected to the
+Internet.**
+
+6. Read over the changes you've made to make sure you typed everything in
+correctly (especially your username and password) 
+
+7. Save the file (you can use the shortcut Ctrl+S) OR Select File -> Save.
+
+8. Close the file
+
+9. Reopen the file to make sure that your changes were actually saved. If it
+doesnt look like they were, then go back to step 4. Otherwise proceed to step 10.
+
+10. Reboot your computer. It should connect automatically to
+LaTechWPA2 after restarting.
+
+11. Good luck.
+
+12. If you have connected to LaTechWPA2, then you no longer need this file and
+can delete it. Or store it somewhere else. Or leave it here. Its your PI so you
+can do whatever you like...you can do whatever you like...get it? TI? No? Maybe
+I'm just old.
